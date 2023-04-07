@@ -1,4 +1,4 @@
-# [Your Name]'s Portfolio Website
+# Max Allan-Smith's Portfolio Website
 
 This is the GitHub repository for my personal portfolio website, built using ReactJS, MongoDB, Express and JavaScript. The purpose of this website is to showcase my skills and experience as a junior software developer, and to provide potential employers and clients with an overview of my work.
 
@@ -11,10 +11,10 @@ This is the GitHub repository for my personal portfolio website, built using Rea
 ## Installation
 To run the application locally, you will need to have Node.js and MongoDB installed on your machine. Once you have cloned the repository, navigate to the project directory in your terminal and run the following commands:
 
-```
+``
 npm install
 npm run dev
-```
+``
 
 This will start the development server and open the application in your default web browser at `http://localhost:3000`. Please note that you will also need to configure your own MongoDB instance to store data from the contact form.
 
