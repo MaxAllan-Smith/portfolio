@@ -13,6 +13,9 @@ To run the application locally, you will need to have Node.js and MongoDB instal
 
 ``
 npm install
+``
+
+``
 npm run dev
 ``
 
