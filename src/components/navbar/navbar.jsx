@@ -16,7 +16,7 @@ function NavBar() {
                     <a href="/" className="text-gray-300 mx-4 hover:text-white">
                         Contact
                     </a>
-                    <a href="/" className="text-gray-300 mx-4 hover:text-white">
+                    <a href="/login" className="text-gray-300 mx-4 hover:text-white">
                         Login
                     </a>
                     </div>
