@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'body': ['Press Start 2P']
+    }
   },
   plugins: [],
 }
