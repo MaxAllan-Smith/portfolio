@@ -22,10 +22,10 @@ function SignUp() {
   };
 
   return (
-    <div className="backdrop-blur-sm p-20 h-screen text-sm flex justify-center items-center">
+    <div className="text-sm flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="p-10 w-2/6 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2"
+        className="mt-10 p-10 w-2/6 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2"
         id="formSignUp"
       >
         <div className="mb-8">

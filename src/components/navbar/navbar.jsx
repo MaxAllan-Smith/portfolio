@@ -27,7 +27,7 @@ function NavBar() {
             </a>
           </div>
 
-          <div className="flex pr-5 text-lg">
+          <div className="flex pr-5 text-sm">
             <a href="/projects" className="text-gray-300 mx-4 hover:text-white">
               Projects
             </a>
