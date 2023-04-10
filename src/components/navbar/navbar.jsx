@@ -2,7 +2,7 @@ import "./navbar.css";
 
 function NavBar() {
   return (
-    <div id="formNavBar" className="sticky top-0 z-50">
+    <div id="formNavBar" className="sticky flex-auto backdrop-blur-sm top-0 z-50">
       <nav className="p-5">
         <div className="flex justify-between items-center">
           <a
@@ -27,7 +27,7 @@ function NavBar() {
             </a>
           </div>
 
-          <div className="flex pr-5 text-lg">
+          <div className="flex pr-5 text-sm">
             <a href="/projects" className="text-gray-300 mx-4 hover:text-white">
               Projects
             </a>

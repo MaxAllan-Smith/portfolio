@@ -1,4 +1,5 @@
 body {
     background-image: url("../../../public/images/background.jpeg");
-    background-size: auto;
+    background-size: cover;
+    background-attachment:fixed;
 }
