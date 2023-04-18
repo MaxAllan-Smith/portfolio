@@ -13,7 +13,7 @@ function Login() {
 
     return ( 
         <div className="flex flex-col 100vh text-sm ">
-            <form onSubmit={handleSubmit} className="p-10 mx-auto mt-56 w-2/5 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2">
+            <form onSubmit={handleSubmit} className="p-10 mx-auto mt-56 w-2/5 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90">
                 <div className="mb-8">
                     <label htmlFor="username" className="block text-white font-bold mb-3">Username/Email:</label>
                     <input
