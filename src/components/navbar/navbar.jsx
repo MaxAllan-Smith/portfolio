@@ -31,9 +31,6 @@ function NavBar() {
             <a href="/projects" className="text-gray-300 mx-4 hover:text-white">
               Projects
             </a>
-            <a href="/about" className="text-gray-300 mx-4 hover:text-white">
-              About
-            </a>
             <a href="/contact" className="text-gray-300 mx-4 hover:text-white">
               Contact
             </a>
