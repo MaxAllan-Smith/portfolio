@@ -25,10 +25,10 @@ function SignUp() {
     <div className="text-sm flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="m-10 p-10 w-2/6 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90"
+        className="m-10 p-10 text-sm w-[500px] bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90"
         id="formSignUp"
       >
-        <div className="mb-8">
+        <div className="mb-5">
           <label htmlFor="username" className="block text-white font-bold mb-3">
             Username:
           </label>
@@ -37,11 +37,11 @@ function SignUp() {
             id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-            className="border rounded-lg px-3 py-2 w-full text-center"
+            className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-5">
           <label
             htmlFor="email-address"
             className="block text-white font-bold mb-3"
@@ -49,15 +49,15 @@ function SignUp() {
             Email Address:
           </label>
           <input
-            type="text"
+            type="email"
             id="email-address"
             value={emailAddress}
             onChange={(event) => setEmailAddress(event.target.value)}
-            className="border rounded-lg px-3 py-2 w-full text-center"
+            className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-5">
           <label htmlFor="password" className="block text-white font-bold mb-3">
             Password:
           </label>
@@ -66,11 +66,11 @@ function SignUp() {
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="border rounded-lg px-3 py-2 w-full text-center"
+            className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-5">
           <label
             htmlFor="confirm-password"
             className="block text-white font-bold mb-3"
@@ -82,11 +82,11 @@ function SignUp() {
             id="confirm-password"
             value={confirmPassord}
             onChange={(event) => setConfirmPassword(event.target.value)}
-            className="border rounded-lg px-3 py-2 w-full text-center"
+            className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-5">
           <label
             htmlFor="first-name"
             className="block text-white font-bold mb-3"
@@ -97,11 +97,11 @@ function SignUp() {
             id="first-name"
             value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
-            className="border rounded-lg px-3 py-2 w-full text-center"
+            className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
         </div>
-        <div className="mb-8">
+        <div className="mb-5">
           <label
             htmlFor="last-name"
             className="block text-white font-bold mb-3"
@@ -112,7 +112,7 @@ function SignUp() {
             id="last-name"
             value={lastName}
             onChange={(event) => setLastName(event.target.value)}
-            className="border rounded-lg px-3 py-2 w-full text-center"
+            className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
         </div>
