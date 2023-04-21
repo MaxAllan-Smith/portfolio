@@ -12,8 +12,8 @@ function Login() {
     };
 
     return ( 
-        <div className="flex flex-col 100vh text-sm ">
-            <form onSubmit={handleSubmit} className="p-10 mx-auto mt-56 w-2/5 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90">
+        <div className="flex flex-col 100vh ">
+            <form onSubmit={handleSubmit} className="p-10 text-sm mx-auto mt-56 bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90">
                 <div className="mb-8">
                     <label htmlFor="username" className="block text-white font-bold mb-3">Username/Email:</label>
                     <input
@@ -21,7 +21,7 @@ function Login() {
                     id="username"
                     value={username}
                     onChange={(event) => setUsername(event.target.value)}
-                    className="border rounded-lg px-3 py-2 w-full text-center"
+                    className="border text-xs w-[450px] text-sm rounded-lg px-3 py-2 text-center"
                     />
                 </div>
                 <div className="mb-4">
@@ -31,7 +31,7 @@ function Login() {
                     id="password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="border rounded-lg px-3 py-2 w-full text-center"
+                    className="border text-xs rounded-lg px-3 py-2 w-full text-center"
                     />
                 </div>
                 <button type="submit" className="bg-blue-500 text-white rounded-lg px-4 py-2 mt-5 hover:bg-blue-700">Log In</button>

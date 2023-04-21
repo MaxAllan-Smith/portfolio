@@ -1,7 +1,7 @@
 function Contact() {
   return (
     <div className="flex justify-center p-20">
-      <div className="bg-slate-800 bg-opacity-90 text-center border-2 border-slate-500 rounded-lg shadow-white shadow-md w-4/5 p-2">
+      <div className="bg-slate-800 bg-opacity-90 text-center border-2 border-slate-500 rounded-lg shadow-white shadow-md p-2">
         <h1 className="text-white font-bold text-xl mt-2">Contact Me</h1>
         <hr className="m-5 border-2 rounded" />
         <div className="grid grid-cols-2 gap-3 justify-center items-center">
