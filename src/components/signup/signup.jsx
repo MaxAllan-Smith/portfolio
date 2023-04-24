@@ -1,30 +1,51 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function SignUp() {
+  const [data, setData] = useState({
+    userName: "",
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const [username, setUsername] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassord, setConfirmPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  function handleSubmit(e) {
+    const newData = { ...data };
+    newData[e.target.id] = e.target.value;
+    setData(newData);
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Username: ", username);
-    console.log("Email Address: ", emailAddress);
-    console.log("Password: ", password);
-    console.log("First Name: ", firstName);
-    console.log("Last Name: ", lastName);
-
-    
-    // Add logic to submit the form data to your backend here
-  };
+  function submit(e) {
+    e.preventDefault();
+    axios
+      .post("/auth/register", {
+        userName: data.userName,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        emailAddress: data.emailAddress,
+        password: data.password,
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .then(
+        setData({
+          userName: "",
+          firstName: "",
+          lastName: "",
+          emailAddress: "",
+          password: "",
+          confirmPassword: "",
+        })
+      );
+  }
 
   return (
     <div className="text-sm flex justify-center items-center">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => submit(e)}
         className="m-10 p-10 text-sm w-[500px] bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90"
         id="formSignUp"
       >
@@ -34,9 +55,9 @@ function SignUp() {
           </label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+            id="userName"
+            value={data.userName}
+            onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
@@ -50,9 +71,9 @@ function SignUp() {
           </label>
           <input
             type="email"
-            id="email-address"
-            value={emailAddress}
-            onChange={(event) => setEmailAddress(event.target.value)}
+            id="emailAddress"
+            value={data.emailAddress}
+            onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
@@ -64,8 +85,8 @@ function SignUp() {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={data.password}
+            onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
@@ -79,9 +100,9 @@ function SignUp() {
           </label>
           <input
             type="password"
-            id="confirm-password"
-            value={confirmPassord}
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            id="confirmPassword"
+            value={data.confirmPassword}
+            onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
@@ -94,9 +115,9 @@ function SignUp() {
             First Name:
           </label>
           <input
-            id="first-name"
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
+            id="firstName"
+            value={data.firstName}
+            onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
@@ -109,9 +130,9 @@ function SignUp() {
             Last Name:
           </label>
           <input
-            id="last-name"
-            value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
+            id="lastName"
+            value={data.lastName}
+            onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
             required
           />
@@ -123,7 +144,6 @@ function SignUp() {
           Sign Up
         </button>
       </form>
-
     </div>
   );
 }
