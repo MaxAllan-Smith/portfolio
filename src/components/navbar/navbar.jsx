@@ -15,7 +15,7 @@ function NavBar() {
           <div className="font-semibold  text-2xl border-solid border-2 rounded-lg p-1">
             <a
               href="/signup"
-              className="text-gray-300 mx-4 hover:text-white italic"
+              className="text-gray-300 mx-4 hover:text-white"
             >
               Signup
             </a>
