@@ -41,11 +41,13 @@ const UserSchema = new mongoose.Schema(
             type: Array,
             default: [],
         },
+        location: {
+            type: String,
+        },
         bio: {
             type: String,
-            max: 200
+            max: 200,
         },
-        location: String,
     },
     { timestamps: true }
 );
