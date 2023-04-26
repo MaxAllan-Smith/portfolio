@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 function SignUp() {
   const [data, setData] = useState({
@@ -11,6 +12,8 @@ function SignUp() {
     confirmPassword: "",
   });
 
+  const form = useRef();
+
   function handleSubmit(e) {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
@@ -19,8 +22,9 @@ function SignUp() {
 
   function submit(e) {
     e.preventDefault();
+
     axios
-      .post("/auth/register", {
+      .post("/users/register", {
         userName: data.userName,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -40,12 +44,22 @@ function SignUp() {
           confirmPassword: "",
         })
       );
+
+    emailjs.sendForm('service_y20lvlj', 'template_cqdix99', form.current, 'bmVTu4X6taUdf0l0o').then(
+      (result) => {
+        console.log(result.text);
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
   }
 
   return (
     <div className="text-sm flex justify-center items-center">
       <form
         onSubmit={(e) => submit(e)}
+        ref={form}
         className="m-10 p-10 text-sm w-[500px] bg-slate-800 rounded-xl shadow-2xl shadow-slate-700 border-solid border-slate-500 border-2 opacity-90"
         id="formSignUp"
       >
@@ -72,6 +86,7 @@ function SignUp() {
           <input
             type="email"
             id="emailAddress"
+            name="emailAddress"
             value={data.emailAddress}
             onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"
@@ -116,6 +131,7 @@ function SignUp() {
           </label>
           <input
             id="firstName"
+            name="firstName"
             value={data.firstName}
             onChange={(e) => handleSubmit(e)}
             className="border text-xs rounded-lg px-3 py-2 w-full text-center"

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "nodemon index.js"
   },
@@ -11,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -25,5 +25,8 @@
     "multer-gridfs-storage": "^5.0.2",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "emailjs": "^4.0.1"
   }
 }

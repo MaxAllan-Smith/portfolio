@@ -1,10 +1,11 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
-import email from './email.js';
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User.js");
 
-// REGISTER USER
-export const register = async (req, res) => {
+// REGISTER USER AND SEND VERIFICATION EMAIL
+router.post("/register", async (req, res) => {
   try {
     const {
       userName,
@@ -33,12 +34,10 @@ export const register = async (req, res) => {
       bio: "",
     });
     const savedUser = await newUser.save();
-
-    if (savedUser) {
-      email(emailAddress);
-      res.status(201).json(savedUser);
-    }
+    res.status(201).json(savedUser);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+});
+
+module.exports = router;
