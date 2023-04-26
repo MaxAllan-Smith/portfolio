@@ -40,4 +40,25 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.get("/login", async (req, res) => {
+  try {
+    const user = await User.findOne({ emailAddress: req.body.emailAddress });
+
+    if (user == null) {
+      return res.status(400).send("User Not Found");
+    }
+
+    const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+
+    if (isPasswordValid) {
+      res.status(200).send("Success");
+    } else {
+      res.status(401).send("Invalid Login Details");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
 module.exports = router;
