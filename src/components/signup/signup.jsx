@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import emailjs from "@emailjs/browser";
 
 function SignUp() {
   const [data, setData] = useState({
@@ -44,15 +43,6 @@ function SignUp() {
           confirmPassword: "",
         })
       );
-
-    emailjs.sendForm('service_y20lvlj', 'template_cqdix99', form.current, 'bmVTu4X6taUdf0l0o').then(
-      (result) => {
-        console.log(result.text);
-      },
-      (error) => {
-        console.log(error.text);
-      }
-    );
   }
 
   return (

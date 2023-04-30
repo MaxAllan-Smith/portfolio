@@ -26,14 +26,17 @@ const userSchema = new mongoose.Schema(
       max: 50,
       unique: true,
     },
-    verified: {
-      type: Boolean,
-      default: false
-    },
     password: {
       type: String,
       required: true,
       min: 5,
+    },
+    verificationToken: {
+      type: String,
+    },
+    emailVerified: {
+      type: Boolean,
+      default: false
     },
     profilePicture: {
       type: String,

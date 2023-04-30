@@ -5,6 +5,7 @@ import NavBar from "./components/navbar/navbar";
 import Login from "./components/login/login";
 import SignUp from "./components/signup/signup";
 import Contact from "./components/contact/contact";
+import EmailVerification from "./components/verifyEmail/verifyEmail";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/signup" element={<SignUp />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/contact" element={<Contact />}/>
+          <Route path="/users/verify-email/:token" element={<EmailVerification />}/>
         </Routes>
       </BrowserRouter>
   );
