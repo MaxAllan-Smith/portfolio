@@ -6,6 +6,7 @@ function Login() {
     emailAddress: "",
     password: "",
   });
+  const [error, setError] = useState(null); // add state for error message
 
   function handleData(e) {
     const newData = { ...data };
@@ -17,19 +18,26 @@ function Login() {
     e.preventDefault();
 
     axios
-      .get("/users/login", {
+      .post("/users/login", {
         emailAddress: data.emailAddress,
         password: data.password,
       })
       .then(function (response) {
         console.log(response.data);
       })
-      .then(
+      .then(() => {
         setData({
           emailAddress: "",
           password: "",
-        })
-      );
+        });
+      })
+      .catch(function (error) {
+        setError(error.response.data.message); // set error message in state
+      });
+  }
+
+  function handleCloseModal() {
+    setError(null); // reset error state when modal is closed
   }
 
   return (
@@ -68,6 +76,23 @@ function Login() {
         >
           Log In
         </button>
+        {error && (
+          <div
+            className="modal fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 flex justify-center items-center"
+            onClick={() => handleCloseModal()}
+          >
+            <div className="bg-white rounded-lg p-6 text-center">
+              <h2 className="text-red-500 font-bold mb-4">Error</h2>
+              <p className="text-gray-800">{error}</p>
+              <button
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+                onClick={() => handleCloseModal()}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

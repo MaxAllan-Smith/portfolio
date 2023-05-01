@@ -28,7 +28,7 @@ const EmailVerification = () => {
   }, [token]);
 
   return (
-    <div className="text-3xl border-2 rounded-lg backdrop-blur-sm bg-slate-600 bg-opacity-60 flex justify-center items-center py-6 mx-[300px] mt-32 text-white">
+    <div className="text-2xl border-2 rounded-lg backdrop-blur-sm bg-slate-600 bg-opacity-60 flex justify-center items-center py-6 mx-[300px] mt-32 text-white">
       <h2>{verificationStatus}</h2>
     </div>
   );

@@ -10,10 +10,8 @@ const User = require("../models/User.js");
 // REGISTER USER AND SEND VERIFICATION EMAIL
 router.post("/register", async (req, res) => {
   try {
-    // Hash the user's password with bcrypt
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    // Create a new user object with the hashed password
     const user = new User({
       userName: req.body.userName,
       firstName: req.body.firstName,
@@ -32,10 +30,8 @@ router.post("/register", async (req, res) => {
       bio: req.body.bio,
     });
 
-    // Save the user to the database
     await user.save();
 
-    // Send verification email to the user
     const transporter = nodemailer.createTransport(
       smtpTransport({
         host: "smtpout.secureserver.net",
@@ -70,6 +66,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// VERIFIES THE ACCOUNT EMAIL TOKEN
 router.get("/verify-email/:token", async (req, res) => {
   try {
     // Verify the JWT token
@@ -88,13 +85,50 @@ router.get("/verify-email/:token", async (req, res) => {
     // Save the updated user object to the database
     await user.save();
 
-    res.status(200).send("Email address verified successfully.\n-------------------\nRedirecting you back to the login page");
+    res
+      .status(200)
+      .send(
+        "Email address verified successfully.\n-------------------\nRedirecting you back to the login page"
+      );
   } catch (error) {
     console.log(error);
     res.status(500).send("Error verifying email address.");
   }
 });
 
-router.get("/login", async (req, res) => {});
+// AUTHENTICATES THE LOGIN FOR THE USER
+router.post("/login", async (req, res) => {
+  try {
+    const { emailAddress, password } = req.body;
+
+    // Check if user exists in the database
+    const user = await User.findOne({ emailAddress });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid login credentials" });
+    }
+
+    if (user.emailVerified === false) {
+      return res.status(401).json({ message: "User account has not been verified" });
+    }
+
+    // Check if password is correct
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid login credentials" });
+    }
+
+    // Generate a JSON Web Token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+    // Assign the token to the user ID and store it in the cookies
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ message: "Login successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;
