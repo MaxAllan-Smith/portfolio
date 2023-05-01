@@ -55,7 +55,7 @@ function Login() {
             id="emailAddress"
             value={data.emailAddress}
             onChange={(e) => handleData(e)}
-            className="border text-xs w-[450px] text-sm rounded-lg px-3 py-2 text-center"
+            className="border w-[450px] text-sm rounded-lg px-3 py-2 text-center"
           />
         </div>
         <div className="mb-4">
