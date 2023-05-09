@@ -2,9 +2,9 @@ import "../homepage/homepage.css";
 
 function Homepage() {
     const styles = {
-        section1: 'mb-[60vh] mt-3 mx-24 p-5 bg-slate-100 rounded-md opacity-60 bg-fixed bg-cover h-screen',
-        section2: 'mb-[60vh] mx-24 p-5 bg-slate-100 rounded-md opacity-60 bg-fixed bg-cover h-screen',
-        section3: 'mb-3 mx-24 p-5 bg-slate-100 rounded-md opacity-60 bg-fixed bg-cover h-screen',
+        section1: 'mb-[50vh] p-5 bg-slate-100 rounded-md opacity-20 bg-fixed bg-cover',
+        section2: 'mb-[50vh] p-5 bg-slate-100 rounded-md opacity-20 bg-fixed bg-cover',
+        section3: 'mb-[50vh] p-5 bg-slate-100 rounded-md opacity-20 bg-fixed bg-cover',
       };
   return (
     <div id="formHomepage" className="">

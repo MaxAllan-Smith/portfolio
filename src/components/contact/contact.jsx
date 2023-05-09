@@ -1,22 +1,47 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useRef } from "react";
 
 function Contact() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [message, setMessage] = useState("");
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    message: "",
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("First Name: ", firstName);
-    console.log("Last Name: ", lastName);
-    console.log("Email Address: ", emailAddress);
-    console.log("Message: ", message);
-    // Add logic to submit the form data to your backend here
-  };
+  const form = useRef();
+
+  function handleSubmit(e) {
+    const newData = { ...data };
+    newData[e.target.id] = e.target.value;
+    setData(newData);
+  }
+
+  function submit(e) {
+    e.preventDefault();
+
+    axios
+      .post("/contact/submit", {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        emailAddress: data.emailAddress,
+        message: data.message,
+      })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .then(
+        setData({
+          firstName: "",
+          lastName: "",
+          emailAddress: "",
+          message: "",
+        })
+      );
+  }
 
   return (
-    <form required onSubmit={handleSubmit}>
+    <form required onSubmit={(e) => submit(e)} ref={form}>
       <div className="flex justify-center p-20">
         <div className="bg-slate-800 bg-opacity-90 text-center border-2 border-slate-500 rounded-lg shadow-white shadow-md p-2">
           <h1 className="text-white font-bold text-xl mt-2">Contact Me</h1>
@@ -29,9 +54,10 @@ function Contact() {
               required
               type="text"
               name="textboxFirstName"
-              id="textboxFirstName"
+              id="firstName"
               className="m-2 p-1 rounded-lg text-center font-sans text-lg font-semibold w-[500px]"
-              onChange={(event) => setFirstName(event.target.value)}
+              value={data.firstName}
+              onChange={(e) => handleSubmit(e)}
             />
             <label htmlFor="textboxLastName" className="text-white">
               Last Name:
@@ -40,9 +66,10 @@ function Contact() {
               required
               type="text"
               name="textboxLastName"
-              id="textboxLastName"
+              id="lastName"
               className="m-2 p-1 rounded-lg text-center font-sans text-lg font-semibold"
-              onChange={(event) => setLastName(event.target.value)}
+              value={data.lastName}
+              onChange={(e) => handleSubmit(e)}
             />
             <label htmlFor="textboxEmailAddress" className="text-white">
               Email Address:
@@ -51,9 +78,10 @@ function Contact() {
               required
               type="email"
               name="textboxEmailAddress"
-              id="textboxEmailAddress"
+              id="emailAddress"
               className="m-2 p-1 rounded-lg text-center font-sans text-lg font-semibold"
-              onChange={(event) => setEmailAddress(event.target.value)}
+              value={data.emailAddress}
+              onChange={(e) => handleSubmit(e)}
             />
             <label htmlFor="textboxQuery" className="text-white">
               Message:
@@ -61,17 +89,17 @@ function Contact() {
             <textarea
               required
               name="textboxQuery"
-              id="textboxQuery"
+              id="message"
               cols="30"
               rows="5"
               className="m-2 p-2 rounded-lg col-span-2 font-sans text-lg"
-              onChange={(event) => setMessage(event.target.value)}
+              value={data.message}
+              onChange={(e) => handleSubmit(e)}
             ></textarea>
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
-              onClick={handleSubmit}
               className="m-2 p-2 rounded-lg bg-blue-500 text-white w-60 font-semibold"
             >
               Submit
