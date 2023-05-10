@@ -35,6 +35,7 @@ const upload = multer({ storage });
 
 // ROUTES
 app.use("/users", upload.single("picture"), userRouter);
+app.use("/contact", contactRouter);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
