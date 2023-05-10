@@ -7,9 +7,11 @@ const path = require("path");
 
 router.post("/submit", async (req, res) => {
   try {
-    const randomEmailID = function(length = 10) {
-      return Math.random().toString(36).substring(2, length + 2);
-    }
+    const randomEmailID = function (length = 10) {
+      return Math.random()
+        .toString(36)
+        .substring(2, length + 2);
+    };
 
     const transporter = nodemailer.createTransport(
       smtpTransport({
@@ -26,35 +28,66 @@ router.post("/submit", async (req, res) => {
     const handlebarOptions = {
       viewEngine: {
         extName: ".handlebars",
-        partialDir: path.resolve('./views'),
+        partialDir: path.resolve("./views"),
         defaultLayout: false,
       },
-      viewPath: path.resolve('./views'),
+      viewPath: path.resolve("./views"),
       extName: ".handlebars",
-    }
+    };
 
-    transporter.use('compile', hbs(handlebarOptions));
+    transporter.use("compile", hbs(handlebarOptions));
 
-    const mailOptions = {
+    const userMailOptions = {
       from: process.env.EMAIL_USERNAME,
       to: req.body.emailAddress,
       subject: `MS-Dev Enquiry Reference: [${randomEmailID()}]`,
-      template: 'contactConfirmEmail',
+      template: "contactConfirmEmail",
       context: {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         emailAddress: req.body.emailAddress,
         message: req.body.message,
-      }
+      },
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
+    const ownerMailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: process.env.EMAIL_ADDRESS,
+      subject: userMailOptions.subject,
+      template: "contactEnquiryEmail",
+      context: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        emailAddress: req.body.emailAddress,
+        message: req.body.message,
+        currentDate: new Date().toLocaleDateString(),
+        currentTime: new Date().toLocaleTimeString(),
+      },
+    };
+
+    transporter.sendMail(userMailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {
         console.log("Email sent: " + info.response);
       }
     });
+
+    transporter.sendMail(ownerMailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    // transporter.sendMail(ownerMailOptions, function (error, info) {
+    //   if (error) {
+    //     console.log(error);
+    //   } else {
+    //     console.log("Email sent: " + info.response);
+    //   }
+    // });
 
     res.status(201).send("Email was sent successfully");
   } catch (error) {
