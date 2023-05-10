@@ -22,11 +22,14 @@ const emailSchema = new mongoose.Schema (
       type: String,
       required: true,
       max: 50,
-      unique: true,
     },
     message: {
       type: String,
     },
+    responded: {
+      type: Boolean,
+      default:false
+    }
   },
   { timestamps: true }
 );

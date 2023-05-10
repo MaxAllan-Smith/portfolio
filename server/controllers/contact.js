@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
@@ -7,16 +9,59 @@ const path = require("path");
 
 const Email = require("../models/email.js");
 
+const transporter = nodemailer.createTransport(
+  smtpTransport({
+    host: "smtpout.secureserver.net",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  })
+);
+
+const handlebarOptions = {
+  viewEngine: {
+    extName: ".handlebars",
+    partialDir: path.resolve("./views"),
+    defaultLayout: false,
+  },
+  viewPath: path.resolve("./views"),
+  extName: ".handlebars",
+};
+
+transporter.use("compile", hbs(handlebarOptions));
+
 router.post("/submit", async (req, res) => {
   try {
-    // RANDOM ID GENERATOR
+    const existingEmail = await Email.findOne({
+      emailAddress: req.body.emailAddress,
+    });
+
+    if (existingEmail) {
+      const now = new Date();
+      const createdAt = new Date(existingEmail.createdAt);
+      const difference = now - createdAt;
+      const days = difference / (1000 * 60 * 60 * 24);
+
+      if (days < 3) {
+        return res
+          .status(500)
+          .send(
+            `You cannot send another request for another ${Math.ceil(
+              3 - days
+            )} days\nPlease wait, I will get back to you soon.\n`
+          );
+      }
+    }
+
     const randomEmailID = function (length = 10) {
       return Math.random()
         .toString(36)
         .substring(2, length + 2);
     };
 
-    // STORES A REFERENCE OF THE EMAIL THREAD TO THE DATABASE
     const email = new Email({
       emailReference: randomEmailID(),
       firstName: req.body.firstName,
@@ -26,34 +71,6 @@ router.post("/submit", async (req, res) => {
     });
 
     if (await email.save()) {
-      // SMTP SETUP
-      const transporter = nodemailer.createTransport(
-        smtpTransport({
-          host: "smtpout.secureserver.net",
-          port: 465,
-          secure: true,
-          auth: {
-            user: process.env.EMAIL_USERNAME,
-            pass: process.env.EMAIL_PASSWORD,
-          },
-        })
-      );
-
-      // HTML EMAIL TEMPLATES BASE PATH
-      const handlebarOptions = {
-        viewEngine: {
-          extName: ".handlebars",
-          partialDir: path.resolve("./views"),
-          defaultLayout: false,
-        },
-        viewPath: path.resolve("./views"),
-        extName: ".handlebars",
-      };
-
-      // COMPILES THE HTML VIEWS FOR EMAILS
-      transporter.use("compile", hbs(handlebarOptions));
-
-      // CONSTRUCTS THE EMAIL FOR THE USER
       const userMailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: req.body.emailAddress,
@@ -67,11 +84,10 @@ router.post("/submit", async (req, res) => {
         },
       };
 
-      // CONSTRUCTS THE EMAIL FOR THE OWNER
       const ownerMailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: process.env.EMAIL_ADDRESS,
-        subject: email.emailReference,
+        subject: `New Enquiry Ref: [${email.emailReference}]`,
         template: "contactEnquiryEmail",
         context: {
           firstName: req.body.firstName,
@@ -83,7 +99,6 @@ router.post("/submit", async (req, res) => {
         },
       };
 
-      // SENDS THE CONFIRMATION EMAIL TO THE USER
       transporter.sendMail(userMailOptions, function (error, info) {
         if (error) {
           console.log(error);
@@ -92,7 +107,6 @@ router.post("/submit", async (req, res) => {
         }
       });
 
-      // SEND THE ENQUIRY TO THE OWNER
       transporter.sendMail(ownerMailOptions, function (error, info) {
         if (error) {
           console.log(error);
@@ -101,12 +115,10 @@ router.post("/submit", async (req, res) => {
         }
       });
 
-      // SENDS A RESPONSE BACK TO THE FRONTEND
-      res.status(201).send("Email was sent successfully");
+      return res.status(201).send("Email was sent successfully");
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error Sending Email");
+    return res.status(500).send(error.message);
   }
 });
 
