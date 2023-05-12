@@ -64,7 +64,7 @@
 			font-weight: normal;
 		}
 
-		button {
+		#button {
 			background: linear-gradient(to right, #3a7bd5, #3a6073);
 			border: none;
 			color: white;
@@ -72,6 +72,8 @@
 			text-align: center;
 			text-decoration: none;
 			display: block;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			font-weight: bold;
 			font-size: 16px;
 			margin: 20px auto;
 			transition-duration: 0.4s;
@@ -79,7 +81,7 @@
 			border-radius: 12px; 
 		}
 
-		.button:hover {
+		#button:hover {
 			background: linear-gradient(to right, #3a6073, #3a7bd5);
 			color: black;
 		}
@@ -113,7 +115,7 @@
       <br>
 			<p>Please follow up with the person who submitted this enquiry as soon as possible.</p>
 			<br>
-			<button href="" class="button">Click Here To Respond</button>
+			<a id="button" href="{{link}}" class="button">Click Here To Respond</a>
 		</div>
 		<div class="footer">
 			<p>This email was sent from MS-Dev.co.uk - © 2023 Max Allan-Smith.</p>

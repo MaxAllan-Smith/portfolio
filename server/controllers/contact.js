@@ -33,6 +33,21 @@ const handlebarOptions = {
 
 transporter.use("compile", hbs(handlebarOptions));
 
+router.get("/respond/:userId", async (req, res) => {
+  try {
+    const user = await Email.findById(req.params.userId);
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Something went wrong');
+  }
+})
+
 router.post("/submit", async (req, res) => {
   try {
     const existingEmail = await Email.findOne({
@@ -94,6 +109,7 @@ router.post("/submit", async (req, res) => {
           lastName: req.body.lastName,
           emailAddress: req.body.emailAddress,
           message: req.body.message,
+          link: `${process.env.BASE_URL}/contact/respond/${email._id}`,
           currentDate: new Date().toLocaleDateString(),
           currentTime: new Date().toLocaleTimeString(),
         },
@@ -121,5 +137,7 @@ router.post("/submit", async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
+
+
 
 module.exports = router;
