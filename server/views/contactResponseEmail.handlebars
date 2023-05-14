@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Response to Enquiry</title>
+  <style>
+    /* Internal CSS */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+    }
+
+    .header {
+      background-color: #0066cc;
+      color: #ffffff;
+      padding: 5px;
+      text-align: center;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .message {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .response {
+      font-style: italic;
+      color: #666;
+    }
+
+    .reply-link {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #0066cc;
+      color: #ffffff;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Response to Enquiry</h1>
+    </div>
+    <div class="content">
+      <p>Dear <strong>{{ firstName }} {{ lastName }}</strong>,</p>
+      <p>Thank you for reaching out to us. Here is our response to your enquiry:</p>
+      <div class="message">
+        <p class="response">{{ responseMessage }}</p>
+      </div>
+      <p>If you have any further questions or need assistance, please feel free to reply to this email. We'll be happy
+        to help you.</p>
+      <p>Best regards,</p>
+      <p>The MS-Dev Team</p>
+      <a class="reply-link" href="mailto:{{ replyEmailAddress }}?subject=Re: Enquiry Ref: [{{ emailReference }}]">Reply
+        to
+        this email</a>
+    </div>
+  </div>
+</body>
+
+
+</html>

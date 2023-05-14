@@ -29,15 +29,16 @@ function Contact() {
       })
       .then(function (response) {
         console.log(response.data);
-      })
-      .then(
         setData({
           firstName: "",
           lastName: "",
           emailAddress: "",
           message: "",
-        })
-      );
+        });
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 
   return (

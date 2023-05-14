@@ -28,8 +28,16 @@ const emailSchema = new mongoose.Schema (
     },
     responded: {
       type: Boolean,
-      default:false
-    }
+      default: false
+    },
+    initialResponse: {
+      type: Array,
+      default: [],
+    },
+    additionalEnquiry: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

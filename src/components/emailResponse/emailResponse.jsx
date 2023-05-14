@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from 'react-router-dom';
-import axios from 'axios'; // Assuming you're using axios. If not, replace this with your HTTP client
+import { useParams } from "react-router-dom";
+import axios from "axios"; // Assuming you're using axios. If not, replace this with your HTTP client
 
 function EmailResponse() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [enquiry, setEnquiry] = useState("");
-  const [response, setResponse] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
 
-  let { userId } = useParams(); // This gets the userId from the URL.
+  let { userId } = useParams();
 
   const textAreaRef = useRef(null);
 
@@ -18,46 +18,46 @@ function EmailResponse() {
     const scrollHeight = textAreaRef.current.scrollHeight;
     textAreaRef.current.style.height = scrollHeight + "px";
 
-    // Replace 'http://localhost:3000/api/users/' with your API endpoint
-    axios.get(`/contact/respond/${userId}`)
-      .then(res => {
-        const user = res.data;
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
-        setEmail(user.emailAddress);
-        setEnquiry(user.message); // Assuming your user object has an 'enquiry' field. If not, remove this line.
+    axios
+      .get(`/contact/respond/${userId}`)
+      .then((res) => {
+        const { data } = res;
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setEmail(data.emailAddress);
+        setEnquiry(data.enquiry);
       })
-      .catch(err => console.error(err));
-  }, [userId, enquiry]); // Only run this effect when the userId changes
+      .catch((err) => {
+        console.error(err);
+        // Handle the error here
+      });
+  }, [userId]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform any necessary validation here
+    try {
+      const response = await axios.post("/contact/respond/submit", {
+        userId: userId,
+        responseMessage: responseMessage,
+      });
 
-    // Submit the form data
-    const formData = {
-      firstName: firstName,
-      lastName: lastName,
-      emailAddress: email,
-      enquiry: enquiry,
-      response: response,
-    };
+      console.log(response.data);
 
-    // Send the formData to the server or perform any other actions
-    console.log(formData)
-
-    // Reset the form fields
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setEnquiry("");
-    setResponse("");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setEnquiry("");
+      setResponseMessage("");
+      window.location.href = "/";
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => handleSubmit(e)}
       className="my-4 max-w-2xl mx-auto p-4 bg-slate-800 opacity-90 rounded-lg shadow-md text-center border-slate-500 border-2"
     >
       <label className="block mb-2 text-white">
@@ -108,8 +108,8 @@ function EmailResponse() {
       <label className="block mb-2 text-white">
         <span className="text-lg">Response Message:</span>
         <textarea
-          value={response}
-          onChange={(e) => setResponse(e.target.value)}
+          value={responseMessage}
+          onChange={(e) => setResponseMessage(e.target.value)}
           className="w-full mt-1 p-2 border border-gray-300 rounded font-sans text-lg font-md text-black text-center"
         />
       </label>

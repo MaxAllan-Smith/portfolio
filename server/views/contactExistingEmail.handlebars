@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enquiry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #F7F8FC;
+      color: #333333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #DDDDDD;
+    }
+
+    .header h1 {
+      font-size: 2em;
+      font-weight: 500;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content strong {
+      color: #333333;
+    }
+
+    .content .original-enquiry,
+    .content .response-section {
+      border: 1px solid #DDDDDD;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 20px 0;
+      background-color: #F7F8FC;
+    }
+
+    .content .original-enquiry p,
+    .content .response-section p {
+      margin-bottom: 10px;
+    }
+
+    .content p.sign-off {
+      margin-top: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid #DDDDDD;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Existing Enquiry</h1>
+    </div>
+    <div class="content">
+      <p>Dear <strong>{{ emailDetail.firstName }} {{ emailDetail.lastName }}</strong>,</p>
+      <p>Your previous enquiry with the email address <strong>{{ emailDetail.emailAddress }}</strong> and the reference
+        <strong>{{ emailDetail.emailReference }}</strong> has already received a response.
+      </p>
+
+      <div class="original-enquiry">
+        <h2>Original Enquiry Details:</h2>
+        <br>
+        <p><strong>Email Reference:</strong> {{ emailDetail.emailReference }}</p>
+        <p><strong>First Name:</strong> {{ emailDetail.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ emailDetail.lastName }}</p>
+        <p><strong>Email Address:</strong> {{ emailDetail.emailAddress }}</p>
+        <p><strong>Message:</strong></p>
+        <div>{{ emailDetail.message }}</div>
+        <br>
+        <p><strong>Created At:</strong> {{ emailDetail.createdAt }}</p>
+      </div>
+
+      <div class="response-section">
+        <h2>Response Message:</h2>
+        <div>
+          <p><strong>Message:</strong>{{ emailDetail.responseMessage }}</p>
+          <p><strong>Responded At:</strong> {{ emailDetail.respondedAt }}</p>
+        </div>
+      </div>
+
+      <p>Thank you for your enquiry.</p>
+      <p class="sign-off">Best regards,</p>
+      <p>Max Allan-Smith</p>
+    </div>
+    <div class="footer">
+      <p>&copy; 2023 MS Dev. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>
